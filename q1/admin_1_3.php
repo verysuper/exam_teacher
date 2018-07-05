@@ -24,8 +24,13 @@
 <?php do{?>
         <tr>
           <td width="45%"><img src="nfgkjewqrhto3ty23984rh9fh32f/<?=$oo["a_1_3_t_p_title"]?>" width="300" height="30"></td>
-          <td width="23%"><input name="my_alt[]" value="<?=$oo["a_1_3_t_p_alt"]?>"></td>
-          <td width="7%"><input name="myupdate<?=$oo["a_1_3_t_p_seq"]?>" type="radio" value="1" <?php if($oo["a_1_3_t_p_look"]==1){echo "checked"; }?>></td>
+          <td width="23%">
+            <input name="my_alt[]" value="<?=$oo["a_1_3_t_p_alt"]?>">
+            <input type ="hidden" name="my_no[]" value="<?=$oo["a_1_3_t_p_seq"]?>">
+          </td>
+          <td width="7%">
+            <input name="myupdate" type="radio" value="<?=$oo["a_1_3_t_p_seq"]?>" <?php if($oo["a_1_3_t_p_look"]==1){echo "checked"; }?>>
+          </td>
           <td width="7%"><input type="checkbox" name="mydelete[]" value="1"></td>
           <td></td>
         </tr>
