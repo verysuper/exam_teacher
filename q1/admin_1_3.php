@@ -3,7 +3,7 @@
     $tt = date("YmdHis");
     $sql="insert into a_1_3_title_pic value(Null,'".$tt.".jpg','".$_POST["myalt"]."','0')";
     mysqli_query($link,$sql);
-    copy($_FILES["mypic"]["tmp_name"],"pic/".$tt.".jpg");
+    copy($_FILES["mypic"]["tmp_name"],"nfgkjewqrhto3ty23984rh9fh32f/".$tt.".jpg");
     ?><script>document.location.href="admin.php"</script><?php
   }
   if(isset($_POST["my_alt"][0])){
@@ -12,15 +12,23 @@
       mysqli_query($link,$sql);
       
       if(!empty($_POST["mydelete"][$i])){
-        $sql = "select * from a_1_3_title_pic where a_1_3_t_p_seq = '".$_POST["my_no"][$i]."'";
+        $sql = "select * from a_1_3_title_pic where a_1_3_t_p_seq = '".$_POST["mydelete"][$i]."'";
         $or = mysqli_query($link,$sql);
         $oo = mysqli_fetch_assoc($or);
-        echo $oo["a_1_3_t_p_title"];
+        unlink("nfgkjewqrhto3ty23984rh9fh32f/".$oo["a_1_3_t_p_title"]);
+        $sql = "delete from a_1_3_title_pic where a_1_3_t_p_seq = '".$_POST["mydelete"][$i]."'";
+        mysqli_query($link,$sql);
       }
-      
     }
-    $sql = "update a_1_3_title_pic set a_1_3_t_p_look = 1 where a_1_3_t_p_seq = '".$_POST["myupdate"]."'";
-    mysqli_query($link,$sql);
+    if(!empty($_POST["myupdate"])){
+      $sql = "update a_1_3_title_pic set a_1_3_t_p_look = 1 where a_1_3_t_p_seq = '".$_POST["myupdate"]."'";
+      mysqli_query($link,$sql);
+    }
+    ?><script>document.location.href="admin.php"</script><?php
+  }
+  if(!empty($_POST["update_pic_no"])){
+    copy($_FILES["update_pic"]["tmp_name"],"nfgkjewqrhto3ty23984rh9fh32f/".$_POST["update_pic_name"]);
+    ?><script>document.location.href="admin.php"</script><?php  
   }
     $sql="select * from a_1_3_title_pic";
     $or =mysqli_query($link,$sql);
@@ -39,7 +47,7 @@
         </tr>
 <?php do{?>
         <tr>
-          <td width="45%"><img src="pic/<?=$oo["a_1_3_t_p_title"]?>" width="300" height="30"></td>
+          <td width="45%"><img src="nfgkjewqrhto3ty23984rh9fh32f/<?=$oo["a_1_3_t_p_title"]?>" width="300" height="30"></td>
           <td width="23%">
             <input name="my_alt[]" value="<?=$oo["a_1_3_t_p_alt"]?>">
             <input type ="hidden" name="my_no[]" value="<?=$oo["a_1_3_t_p_seq"]?>">
@@ -48,7 +56,7 @@
             <input name="myupdate" type="radio" value="<?=$oo["a_1_3_t_p_seq"]?>" <?php if($oo["a_1_3_t_p_look"]==1){echo "checked"; }?>>
           </td>
           <td width="7%"><input type="checkbox" name="mydelete[]" value="<?=$oo["a_1_3_t_p_seq"]?>"></td>
-          <td></td>
+          <td><input type="button" onclick="op('#cover','#cvr','admin_1_3_update_pic.php?pic=<?=$oo["a_1_3_t_p_seq"]?>')" value="更新圖片"></td>
         </tr>
 <?php }while($oo = mysqli_fetch_assoc($or));?>
     </table>
